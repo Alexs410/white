@@ -137,7 +137,6 @@ SUBSYSTEM_DEF(ticker)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
-
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase(return_list=TRUE)
 
@@ -182,10 +181,10 @@ SUBSYSTEM_DEF(ticker)
 				//lobby stats for statpanels
 			if(isnull(timeLeft))
 				timeLeft = max(0,start_at - world.time)
-			totalPlayers = 0
+			totalPlayers = LAZYLEN(GLOB.new_player_list)
 			totalPlayersReady = 0
-			for(var/mob/dead/new_player/player in GLOB.player_list)
-				++totalPlayers
+			for(var/i in GLOB.new_player_list)
+				var/mob/dead/new_player/player = i
 				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 
@@ -774,22 +773,6 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, span_info("Статистику по раундам вы можете найти на <a href=\"[statspage][GLOB.round_id]\">нашем сайте!</a>"))
 	else if(gamelogloc)
 		to_chat(world, span_info("Round logs can be located <a href=\"[gamelogloc]\">at this website!</a>"))
-
-	//snowflake handling for saving assblasteds
-	fdel("[global.config.directory]/assblasted_people.txt") // no way this could end badly
-	var/newblast = ""
-	for(var/asskey in GLOB.assblasted_people)
-		var/list/asskey_blasts = retrieve_assblasts(asskey)
-		for(var/blast in asskey_blasts) //cutting out invalid entries
-			if(!GLOB.assblasts.Find(blast))
-				asskey_blasts.Remove(blast)
-		if(asskey_blasts.len == 0)
-			continue
-		newblast += "\n"
-		var/ab = jointext(asskey_blasts,"|")
-		newblast += "[asskey]||[ab]"
-	newblast = copytext(newblast, 2)
-	text2file(newblast, "[global.config.directory]/assblasted_people.txt")
 
 	log_game(span_boldannounce("Пересоздаём мир. [reason]"))
 

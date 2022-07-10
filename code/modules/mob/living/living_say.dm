@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	RADIO_KEY_SYNDICATE = RADIO_CHANNEL_SYNDICATE,
 	RADIO_KEY_CENTCOM = RADIO_CHANNEL_CENTCOM,
 	RADIO_KEY_FACTION = RADIO_CHANNEL_FACTION,
+	RADIO_KEY_YOHEI = RADIO_CHANNEL_YOHEI,
 
 	// Admin
 	MODE_KEY_ADMIN = MODE_ADMIN,
@@ -410,14 +411,14 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(fucking_anime_girl_noises_oh_nya)
 		message = ddlc_text(message)
 
+	if(hydration <= HYDRATION_LEVEL_DEHYDRATED)
+		message = thirstymessage(message)
+
 	if(cultslurring && slurring)
 		message = cultslur(message)
 
 	else if(slurring)
 		message = slur(message)
-
-	if(hydration <= HYDRATION_LEVEL_DEHYDRATED)
-		message = thirstymessage(message)
 
 	if(client?.prefs?.disabled_autocap)
 		message = message

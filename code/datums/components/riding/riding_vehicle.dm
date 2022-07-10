@@ -198,8 +198,24 @@
 /datum/component/riding/vehicle/forklift
 	keytype = /obj/item/key/forklift
 
+/datum/component/riding/vehicle/forklift/handle_specials()
+	. = ..()
+	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
+	set_vehicle_dir_layer(NORTH, MOB_LAYER)
+	set_vehicle_dir_layer(EAST, MOB_LAYER)
+	set_vehicle_dir_layer(WEST, MOB_LAYER)
+
 /datum/component/riding/vehicle/forklift/engineering
 	keytype = /obj/item/key/forklift/engineering
+
+/datum/component/riding/vehicle/forklift/engineering/handle_specials()
+	. = ..()
+	set_vehicle_dir_offsets(NORTH, -16, -16)
+	set_vehicle_dir_offsets(SOUTH, -16, -16)
+	set_vehicle_dir_offsets(EAST, -16, -16)
+	set_vehicle_dir_offsets(WEST, -16, -16)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 
 /datum/component/riding/vehicle/forklift/medical
 	keytype = /obj/item/key/forklift/medbay
@@ -287,6 +303,9 @@
 	set_vehicle_dir_offsets(SOUTH, -16, -16)
 	set_vehicle_dir_offsets(EAST, -18, 0)
 	set_vehicle_dir_offsets(WEST, -18, 0)
+	set_vehicle_dir_layer(SOUTH, VEHICLE_LAYER)
+	set_vehicle_dir_layer(EAST, VEHICLE_LAYER)
+	set_vehicle_dir_layer(WEST, VEHICLE_LAYER)
 
 /datum/component/riding/vehicle/speedwagon
 	vehicle_move_delay = 0
